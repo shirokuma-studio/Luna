@@ -1,0 +1,12 @@
+{
+  "ping_command": {
+    "pinging": "🏓 กำลังทดสอบ...",
+    "title": "ปิงปอง! - สถานะบอท",
+    "api_latency": "ความหน่วงของ API",
+    "ws_latency": "ความหน่วงของ WebSocket",
+    "database": "ฐานข้อมูล",
+    "uptime": "เวลาทำงาน",
+    "db_online": "✅ ออนไลน์",
+    "db_offline": "❌ ออฟไลน์"
+  }
+}

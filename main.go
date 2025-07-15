@@ -8,6 +8,7 @@ import (
 	"luna/config"
 	"luna/handlers/events"
 	"luna/handlers/web"
+	"luna/i18n"
 	"luna/interfaces"
 	"luna/logger"
 	"luna/servers"
@@ -22,6 +23,10 @@ func main() {
 
 	if err := config.LoadConfig(log); err != nil {
 		log.Fatal("設定ファイルの読み込みに失敗しました", "error", err)
+	}
+
+	if err := i18n.Init(); err != nil {
+		log.Fatal("翻訳ファイルの読み込みに失敗しました", "error", err)
 	}
 
 	// 認証システムの初期化

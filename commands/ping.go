@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"luna/i18n"
 	"luna/interfaces"
 	"strings"
 	"time"
@@ -22,12 +23,13 @@ func (c *PingCommand) GetCommandDef() *discordgo.ApplicationCommand {
 }
 
 func (c *PingCommand) Handle(s *discordgo.Session, i *discordgo.InteractionCreate) {
-	// 1. まずは即時応答し、APIレイテンシを測定する基準点を作る
+	lang := i.Locale
+
 	start := time.Now()
 	err := s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 		Type: discordgo.InteractionResponseChannelMessageWithSource,
 		Data: &discordgo.InteractionResponseData{
-			Content: "🏓 Pinging...",
+			Content: i18n.GetMessage(lang, "ping_command.pinging", nil),
 		},
 	})
 	if err != nil {
@@ -35,52 +37,48 @@ func (c *PingCommand) Handle(s *discordgo.Session, i *discordgo.InteractionCreat
 	}
 	apiLatency := time.Since(start)
 
-	// 2. WebSocketのレイテンシを取得
 	wsLatency := s.HeartbeatLatency()
 
-	// 3. データベースの応答を確認
 	dbStart := time.Now()
 	dbErr := c.Store.PingDB()
 	dbLatency := time.Since(dbStart)
-	dbStatus := "✅ Online"
+	dbStatusKey := "ping_command.db_online"
 	if dbErr != nil {
-		dbStatus = "❌ Offline"
+		dbStatusKey = "ping_command.db_offline"
 	}
+	dbStatus := i18n.GetMessage(lang, dbStatusKey, nil)
 
-	// 4. アップタイムを計算
 	uptime := time.Since(c.StartTime)
 
-	// 5. 結果をEmbedにまとめて表示
 	embed := &discordgo.MessageEmbed{
-		Title: "Pong! - BOTステータス",
+		Title: i18n.GetMessage(lang, "ping_command.title", nil),
 		Color: 0x7289da, // Discord Blue
 		Fields: []*discordgo.MessageEmbedField{
 			{
-				Name:   "APIレイテンシ",
+				Name:   i18n.GetMessage(lang, "ping_command.api_latency", nil),
 				Value:  fmt.Sprintf("```%s```", apiLatency.Round(time.Millisecond).String()),
 				Inline: true,
 			},
 			{
-				Name:   "WebSocketレイテンシ",
+				Name:   i18n.GetMessage(lang, "ping_command.ws_latency", nil),
 				Value:  fmt.Sprintf("```%s```", wsLatency.Round(time.Millisecond).String()),
 				Inline: true,
 			},
 			{
-				Name:   "データベース",
+				Name:   i18n.GetMessage(lang, "ping_command.database", nil),
 				Value:  fmt.Sprintf("```%s (%s)```", dbStatus, dbLatency.Round(time.Millisecond).String()),
 				Inline: true,
 			},
 			{
-				Name:  "アップタイム",
+				Name:  i18n.GetMessage(lang, "ping_command.uptime", nil),
 				Value: fmt.Sprintf("```%s```", formatUptime(uptime)),
 			},
 		},
 		Timestamp: time.Now().Format(time.RFC3339),
 	}
 
-	// 最初に送った "Pinging..." というメッセージを、完成したEmbedに編集する
 	if _, err := s.InteractionResponseEdit(i.Interaction, &discordgo.WebhookEdit{
-		Content: new(string), // テキストを空にする
+		Content: new(string),
 		Embeds:  &[]*discordgo.MessageEmbed{embed},
 	}); err != nil {
 		// c.Log is not available in PingCommand.

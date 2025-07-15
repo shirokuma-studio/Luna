@@ -1,0 +1,12 @@
+{
+  "ping_command": {
+    "pinging": "🏓 测试中...",
+    "title": "Pong! - 机器人状态",
+    "api_latency": "API 延迟",
+    "ws_latency": "WebSocket 延迟",
+    "database": "数据库",
+    "uptime": "正常运行时间",
+    "db_online": "✅ 在线",
+    "db_offline": "❌ 离线"
+  }
+}

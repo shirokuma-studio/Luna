@@ -1,0 +1,12 @@
+{
+  "ping_command": {
+    "pinging": "🏓 Pinging...",
+    "title": "Pong! - BOTステータス",
+    "api_latency": "APIレイテンシ",
+    "ws_latency": "WebSocketレイテンシ",
+    "database": "データベース",
+    "uptime": "アップタイム",
+    "db_online": "✅ Online",
+    "db_offline": "❌ Offline"
+  }
+}

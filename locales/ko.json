@@ -1,0 +1,12 @@
+{
+  "ping_command": {
+    "pinging": "🏓 핑 보내는 중...",
+    "title": "퐁! - 봇 상태",
+    "api_latency": "API 지연 시간",
+    "ws_latency": "웹소켓 지연 시간",
+    "database": "데이터베이스",
+    "uptime": "가동 시간",
+    "db_online": "✅ 온라인",
+    "db_offline": "❌ 오프라인"
+  }
+}
