@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"luna/i18n"
 	"luna/interfaces"
 	"strings"
 	"time"
@@ -24,6 +25,7 @@ func (c *UserInfoCommand) GetCommandDef() *discordgo.ApplicationCommand {
 }
 
 func (c *UserInfoCommand) Handle(s *discordgo.Session, i *discordgo.InteractionCreate) {
+	lang := i.Locale
 	options := i.ApplicationCommandData().Options
 	var targetUser *discordgo.User
 	if len(options) > 0 {
@@ -39,19 +41,15 @@ func (c *UserInfoCommand) Handle(s *discordgo.Session, i *discordgo.InteractionC
 			c.Log.Error("メンバー情報の取得に失敗", "error", err, "userID", targetUser.ID)
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponseChannelMessageWithSource,
-				Data: &discordgo.InteractionResponseData{Content: "❌ メンバー情報の取得に失敗しました。", Flags: discordgo.MessageFlagsEphemeral},
+				Data: &discordgo.InteractionResponseData{Content: i18n.GetMessage(lang, "user_info_command.error_fetch", nil), Flags: discordgo.MessageFlagsEphemeral},
 			})
 			return
 		}
 	}
 
-	// --- 情報の整形 ---
-
-	// 1. 日時
 	joinedAt := member.JoinedAt
 	createdAt, _ := discordgo.SnowflakeTimestamp(targetUser.ID)
 
-	// 2. ロール
 	roles := make([]string, 0)
 	guildRoles, _ := s.GuildRoles(i.GuildID)
 	for _, roleID := range member.Roles {
@@ -62,34 +60,26 @@ func (c *UserInfoCommand) Handle(s *discordgo.Session, i *discordgo.InteractionC
 			}
 		}
 	}
-	rolesStr := "なし"
+	rolesStr := i18n.GetMessage(lang, "user_info_command.none", nil)
 	if len(roles) > 0 {
 		rolesStr = strings.Join(roles, " ")
 	}
 
-	// 3. ステータスとアクティビティ
 	presence, err := s.State.Presence(i.GuildID, targetUser.ID)
-	statusStr := "オフライン"
-	activityStr := "なし"
+	statusStr := i18n.GetMessage(lang, "user_info_command.status_offline", nil)
+	activityStr := i18n.GetMessage(lang, "user_info_command.none", nil)
 	if err == nil {
-		statusMap := map[discordgo.Status]string{
-			discordgo.StatusOnline:       "🟢 オンライン",
-			discordgo.StatusIdle:         "🟡 離席中",
-			discordgo.StatusDoNotDisturb: "🔴 取り込み中",
-			discordgo.StatusInvisible:    "⚪ 不可視",
-			discordgo.StatusOffline:      "⚫ オフライン",
-		}
-		statusStr = statusMap[presence.Status]
+		statusStr = i18n.GetMessage(lang, "user_info_command.status_"+string(presence.Status), nil)
 
 		if len(presence.Activities) > 0 {
 			activity := presence.Activities[0]
-			activityStr = fmt.Sprintf("%s: %s", activityTypeToString(activity.Type), activity.Name)
+			activityType := i18n.GetMessage(lang, "user_info_command.activity_"+strings.ToLower(activity.Type.String()), nil)
+			activityStr = fmt.Sprintf("%s: %s", activityType, activity.Name)
 		}
 	}
 
-	// --- Embedの作成 ---
 	embed := &discordgo.MessageEmbed{
-		Title:     fmt.Sprintf("%s の情報", targetUser.Username),
+		Title:     i18n.GetMessage(lang, "user_info_command.title", map[string]interface{}{"Username": targetUser.Username}),
 		Color:     s.State.UserColor(targetUser.ID, i.ChannelID),
 		Timestamp: time.Now().Format(time.RFC3339),
 		Thumbnail: &discordgo.MessageEmbedThumbnail{URL: member.AvatarURL("1024")},
@@ -98,11 +88,11 @@ func (c *UserInfoCommand) Handle(s *discordgo.Session, i *discordgo.InteractionC
 			IconURL: targetUser.AvatarURL(""),
 		},
 		Fields: []*discordgo.MessageEmbedField{
-			{Name: "基本情報", Value: fmt.Sprintf("**ID:** `%s`\n**Bot:** %v", targetUser.ID, targetUser.Bot), Inline: false},
-			{Name: "日時", Value: fmt.Sprintf("**アカウント作成:** <t:%d:R>\n**サーバー参加:** <t:%d:R>", createdAt.Unix(), joinedAt.Unix()), Inline: false},
-			{Name: "ステータス", Value: statusStr, Inline: true},
-			{Name: "アクティビティ", Value: activityStr, Inline: true},
-			{Name: fmt.Sprintf("役割 (%d)", len(roles)), Value: rolesStr, Inline: false},
+			{Name: i18n.GetMessage(lang, "user_info_command.section_basic", nil), Value: fmt.Sprintf("**%s** `%s`\n**%s** %v", i18n.GetMessage(lang, "user_info_command.field_id", nil), targetUser.ID, i18n.GetMessage(lang, "user_info_command.field_bot", nil), targetUser.Bot), Inline: false},
+			{Name: i18n.GetMessage(lang, "user_info_command.section_dates", nil), Value: fmt.Sprintf("**%s** <t:%d:R>\n**%s** <t:%d:R>", i18n.GetMessage(lang, "user_info_command.field_account_created", nil), createdAt.Unix(), i18n.GetMessage(lang, "user_info_command.field_server_joined", nil), joinedAt.Unix()), Inline: false},
+			{Name: i18n.GetMessage(lang, "user_info_command.section_status", nil), Value: statusStr, Inline: true},
+			{Name: i18n.GetMessage(lang, "user_info_command.section_activity", nil), Value: activityStr, Inline: true},
+			{Name: i18n.GetMessage(lang, "user_info_command.section_roles", map[string]interface{}{"Count": len(roles)}), Value: rolesStr, Inline: false},
 		},
 	}
 
@@ -110,25 +100,6 @@ func (c *UserInfoCommand) Handle(s *discordgo.Session, i *discordgo.InteractionC
 		Type: discordgo.InteractionResponseChannelMessageWithSource,
 		Data: &discordgo.InteractionResponseData{Embeds: []*discordgo.MessageEmbed{embed}},
 	})
-}
-
-func activityTypeToString(at discordgo.ActivityType) string {
-	switch at {
-	case discordgo.ActivityTypeGame:
-		return "プレイ中"
-	case discordgo.ActivityTypeStreaming:
-		return "配信中"
-	case discordgo.ActivityTypeListening:
-		return "リスニング中"
-	case discordgo.ActivityTypeWatching:
-		return "視聴中"
-	case discordgo.ActivityTypeCustom:
-		return "カスタムステータス"
-	case discordgo.ActivityTypeCompeting:
-		return "競争中"
-	default:
-		return "不明"
-	}
 }
 
 func (c *UserInfoCommand) HandleComponent(s *discordgo.Session, i *discordgo.InteractionCreate) {}

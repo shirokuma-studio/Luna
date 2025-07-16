@@ -8,5 +8,46 @@
     "uptime": "アップタイム",
     "db_online": "✅ Online",
     "db_offline": "❌ Offline"
+  },
+  "user_info_command": {
+    "title": "{{.Username}} の情報",
+    "error_fetch": "❌ メンバー情報の取得に失敗しました。",
+    "section_basic": "基本情報",
+    "field_id": "ID:",
+    "field_bot": "Bot:",
+    "section_dates": "日時",
+    "field_account_created": "アカウント作成:",
+    "field_server_joined": "サーバー参加:",
+    "section_status": "ステータス",
+    "section_activity": "アクティビティ",
+    "section_roles": "役割 ({{.Count}})",
+    "none": "なし",
+    "status_online": "🟢 オンライン",
+    "status_idle": "🟡 離席中",
+    "status_dnd": "🔴 取り込み中",
+    "status_invisible": "⚪ 不可視",
+    "status_offline": "⚫ オフライン",
+    "activity_playing": "プレイ中",
+    "activity_streaming": "配信中",
+    "activity_listening": "リスニング中",
+    "activity_watching": "視聴中",
+    "activity_custom": "カスタムステータス",
+    "activity_competing": "競争中",
+    "activity_unknown": "不明"
+  },
+  "avatar_command": {
+    "title": "{{.Username}}のプロフィール画像",
+    "error_fetch": "❌ メンバー情報の取得に失敗しました。",
+    "field_global_avatar": "グローバルアバターURL",
+    "field_server_avatar": "サーバーアバターURL",
+    "field_banner": "バナー画像URL",
+    "link": "リンク"
+  },
+  "calculator_command": {
+    "title": "🧮 計算結果",
+    "field_expression": "数式",
+    "field_result": "結果",
+    "error_invalid_expression": "❌ 無効な数式です: `{{.Expression}}`\n**エラー:** `{{.Error}}`",
+    "error_evaluation": "❌ 数式の計算中にエラーが発生しました: `{{.Expression}}`\n**エラー:** `{{.Error}}`"
   }
 }

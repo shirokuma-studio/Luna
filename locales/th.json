@@ -8,5 +8,46 @@
     "uptime": "เวลาทำงาน",
     "db_online": "✅ ออนไลน์",
     "db_offline": "❌ ออฟไลน์"
+  },
+  "user_info_command": {
+    "title": "ข้อมูลของ {{.Username}}",
+    "error_fetch": "❌ ไม่สามารถดึงข้อมูลสมาชิกได้",
+    "section_basic": "ข้อมูลพื้นฐาน",
+    "field_id": "ID:",
+    "field_bot": "บอท:",
+    "section_dates": "วันที่",
+    "field_account_created": "สร้างบัญชีเมื่อ:",
+    "field_server_joined": "เข้าร่วมเซิร์ฟเวอร์เมื่อ:",
+    "section_status": "สถานะ",
+    "section_activity": "กิจกรรม",
+    "section_roles": "บทบาท ({{.Count}})",
+    "none": "ไม่มี",
+    "status_online": "🟢 ออนไลน์",
+    "status_idle": "🟡 ไม่ได้ใช้งาน",
+    "status_dnd": "🔴 ห้ามรบกวน",
+    "status_invisible": "⚪ ซ่อนตัว",
+    "status_offline": "⚫ ออฟไลน์",
+    "activity_playing": "กำลังเล่น",
+    "activity_streaming": "กำลังสตรีม",
+    "activity_listening": "กำลังฟัง",
+    "activity_watching": "กำลังดู",
+    "activity_custom": "สถานะกำหนดเอง",
+    "activity_competing": "กำลังแข่งขันใน",
+    "activity_unknown": "ไม่ทราบ"
+  },
+  "avatar_command": {
+    "title": "รูปโปรไฟล์ของ {{.Username}}",
+    "error_fetch": "❌ ไม่สามารถดึงข้อมูลสมาชิกได้",
+    "field_global_avatar": "URL รูปโปรไฟล์สากล",
+    "field_server_avatar": "URL รูปโปรไฟล์เซิร์ฟเวอร์",
+    "field_banner": "URL รูปแบนเนอร์",
+    "link": "ลิงก์"
+  },
+  "calculator_command": {
+    "title": "🧮 ผลการคำนวณ",
+    "field_expression": "นิพจน์",
+    "field_result": "ผลลัพธ์",
+    "error_invalid_expression": "❌ นิพจน์ไม่ถูกต้อง: `{{.Expression}}`\n**ข้อผิดพลาด:** `{{.Error}}`",
+    "error_evaluation": "❌ เกิดข้อผิดพลาดขณะประเมินนิพจน์: `{{.Expression}}`\n**ข้อผิดพลาด:** `{{.Error}}`"
   }
 }

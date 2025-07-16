@@ -3,6 +3,7 @@ package commands
 import (
 	"errors"
 	"fmt"
+	"luna/i18n"
 	"luna/interfaces"
 	"math"
 
@@ -30,6 +31,7 @@ func (c *CalculatorCommand) GetCommandDef() *discordgo.ApplicationCommand {
 }
 
 func (c *CalculatorCommand) Handle(s *discordgo.Session, i *discordgo.InteractionCreate) {
+	lang := i.Locale
 	expressionStr := i.ApplicationCommandData().Options[0].StringValue()
 
 	functions := map[string]govaluate.ExpressionFunction{
@@ -84,7 +86,7 @@ func (c *CalculatorCommand) Handle(s *discordgo.Session, i *discordgo.Interactio
 	expression, err := govaluate.NewEvaluableExpressionWithFunctions(expressionStr, functions)
 	if err != nil {
 		c.Log.Error("数式の解析に失敗", "error", err, "expression", expressionStr)
-		errorMessage := fmt.Sprintf("❌ 無効な数式です: `%s`\n**エラー:** `%v`", expressionStr, err)
+		errorMessage := i18n.GetMessage(lang, "calculator_command.error_invalid_expression", map[string]interface{}{"Expression": expressionStr, "Error": err})
 		if err := s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{Type: discordgo.InteractionResponseChannelMessageWithSource, Data: &discordgo.InteractionResponseData{Content: errorMessage, Flags: discordgo.MessageFlagsEphemeral}}); err != nil {
 			c.Log.Error("Failed to send error response", "error", err)
 		}
@@ -94,7 +96,7 @@ func (c *CalculatorCommand) Handle(s *discordgo.Session, i *discordgo.Interactio
 	result, err := expression.Evaluate(parameters)
 	if err != nil {
 		c.Log.Error("数式の計算に失敗", "error", err, "expression", expressionStr)
-		errorMessage := fmt.Sprintf("❌ 数式の計算中にエラーが発生しました: `%s`\n**エラー:** `%v`", expressionStr, err)
+		errorMessage := i18n.GetMessage(lang, "calculator_command.error_evaluation", map[string]interface{}{"Expression": expressionStr, "Error": err})
 		if err := s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{Type: discordgo.InteractionResponseChannelMessageWithSource, Data: &discordgo.InteractionResponseData{Content: errorMessage, Flags: discordgo.MessageFlagsEphemeral}}); err != nil {
 			c.Log.Error("Failed to send error response", "error", err)
 		}
@@ -102,10 +104,10 @@ func (c *CalculatorCommand) Handle(s *discordgo.Session, i *discordgo.Interactio
 	}
 
 	embed := &discordgo.MessageEmbed{
-		Title: "🧮 計算結果",
+		Title: i18n.GetMessage(lang, "calculator_command.title", nil),
 		Fields: []*discordgo.MessageEmbedField{
-			{Name: "数式", Value: fmt.Sprintf("```\n%s\n```", expressionStr)},
-			{Name: "結果", Value: fmt.Sprintf("```\n%v\n```", result)},
+			{Name: i18n.GetMessage(lang, "calculator_command.field_expression", nil), Value: fmt.Sprintf("```\n%s\n```", expressionStr)},
+			{Name: i18n.GetMessage(lang, "calculator_command.field_result", nil), Value: fmt.Sprintf("```\n%v\n```", result)},
 		},
 		Color: 0x57F287,
 	}

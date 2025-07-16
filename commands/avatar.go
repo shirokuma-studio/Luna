@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"luna/i18n"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -24,6 +25,7 @@ func (c *AvatarCommand) GetCommandDef() *discordgo.ApplicationCommand {
 }
 
 func (c *AvatarCommand) Handle(s *discordgo.Session, i *discordgo.InteractionCreate) {
+	lang := i.Locale
 	options := i.ApplicationCommandData().Options
 	var targetUser *discordgo.User
 	var targetMember *discordgo.Member
@@ -36,9 +38,8 @@ func (c *AvatarCommand) Handle(s *discordgo.Session, i *discordgo.InteractionCre
 			if err != nil {
 				if err := s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 					Type: discordgo.InteractionResponseChannelMessageWithSource,
-					Data: &discordgo.InteractionResponseData{Content: "❌ メンバー情報の取得に失敗しました。", Flags: discordgo.MessageFlagsEphemeral},
+					Data: &discordgo.InteractionResponseData{Content: i18n.GetMessage(lang, "avatar_command.error_fetch", nil), Flags: discordgo.MessageFlagsEphemeral},
 				}); err != nil {
-					// Log the error, but we can't do much more
 					fmt.Printf("Failed to respond to interaction: %v\n", err)
 				}
 				return
@@ -60,7 +61,7 @@ func (c *AvatarCommand) Handle(s *discordgo.Session, i *discordgo.InteractionCre
 	bannerURL := userWithBanner.BannerURL("1024")
 
 	embed := &discordgo.MessageEmbed{
-		Title: fmt.Sprintf("%s のプロフィール画像", targetUser.Username),
+		Title: i18n.GetMessage(lang, "avatar_command.title", map[string]interface{}{"Username": targetUser.Username}),
 		Color: 0x7289da,
 		Author: &discordgo.MessageEmbedAuthor{
 			Name:    targetUser.String(),
@@ -70,15 +71,15 @@ func (c *AvatarCommand) Handle(s *discordgo.Session, i *discordgo.InteractionCre
 	}
 
 	embed.Image = &discordgo.MessageEmbedImage{URL: avatarURL}
-	embed.Fields = append(embed.Fields, &discordgo.MessageEmbedField{Name: "グローバルアバターURL", Value: fmt.Sprintf("[リンク](%s)", avatarURL)})
+	embed.Fields = append(embed.Fields, &discordgo.MessageEmbedField{Name: i18n.GetMessage(lang, "avatar_command.field_global_avatar", nil), Value: fmt.Sprintf("[%s](%s)", i18n.GetMessage(lang, "avatar_command.link", nil), avatarURL)})
 
 	if targetMember.Avatar != "" {
 		embed.Thumbnail = &discordgo.MessageEmbedThumbnail{URL: serverAvatarURL}
-		embed.Fields = append(embed.Fields, &discordgo.MessageEmbedField{Name: "サーバーアバターURL", Value: fmt.Sprintf("[リンク](%s)", serverAvatarURL)})
+		embed.Fields = append(embed.Fields, &discordgo.MessageEmbedField{Name: i18n.GetMessage(lang, "avatar_command.field_server_avatar", nil), Value: fmt.Sprintf("[%s](%s)", i18n.GetMessage(lang, "avatar_command.link", nil), serverAvatarURL)})
 	}
 
 	if userWithBanner.Banner != "" {
-		embed.Fields = append(embed.Fields, &discordgo.MessageEmbedField{Name: "バナー画像URL", Value: fmt.Sprintf("[リンク](%s)", bannerURL)})
+		embed.Fields = append(embed.Fields, &discordgo.MessageEmbedField{Name: i18n.GetMessage(lang, "avatar_command.field_banner", nil), Value: fmt.Sprintf("[%s](%s)", i18n.GetMessage(lang, "avatar_command.link", nil), bannerURL)})
 	}
 
 	if err := s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
@@ -87,7 +88,6 @@ func (c *AvatarCommand) Handle(s *discordgo.Session, i *discordgo.InteractionCre
 			Embeds: []*discordgo.MessageEmbed{embed},
 		},
 	}); err != nil {
-		// Log the error, but we can't do much more
 		fmt.Printf("Failed to respond to interaction: %v\n", err)
 	}
 }

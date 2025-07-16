@@ -8,5 +8,46 @@
     "uptime": "Uptime",
     "db_online": "✅ Online",
     "db_offline": "❌ Offline"
+  },
+  "user_info_command": {
+    "title": "{{.Username}}'s Info",
+    "error_fetch": "❌ Failed to fetch member information.",
+    "section_basic": "Basic Info",
+    "field_id": "ID:",
+    "field_bot": "Bot:",
+    "section_dates": "Dates",
+    "field_account_created": "Account Created:",
+    "field_server_joined": "Joined Server:",
+    "section_status": "Status",
+    "section_activity": "Activity",
+    "section_roles": "Roles ({{.Count}})",
+    "none": "None",
+    "status_online": "🟢 Online",
+    "status_idle": "🟡 Idle",
+    "status_dnd": "🔴 Do Not Disturb",
+    "status_invisible": "⚪ Invisible",
+    "status_offline": "⚫ Offline",
+    "activity_playing": "Playing",
+    "activity_streaming": "Streaming",
+    "activity_listening": "Listening to",
+    "activity_watching": "Watching",
+    "activity_custom": "Custom Status",
+    "activity_competing": "Competing in",
+    "activity_unknown": "Unknown"
+  },
+  "avatar_command": {
+    "title": "{{.Username}}'s Profile Picture",
+    "error_fetch": "❌ Failed to fetch member information.",
+    "field_global_avatar": "Global Avatar URL",
+    "field_server_avatar": "Server Avatar URL",
+    "field_banner": "Banner Image URL",
+    "link": "Link"
+  },
+  "calculator_command": {
+    "title": "🧮 Calculation Result",
+    "field_expression": "Expression",
+    "field_result": "Result",
+    "error_invalid_expression": "❌ Invalid expression: `{{.Expression}}`\n**Error:** `{{.Error}}`",
+    "error_evaluation": "❌ An error occurred while evaluating the expression: `{{.Expression}}`\n**Error:** `{{.Error}}`"
   }
 }

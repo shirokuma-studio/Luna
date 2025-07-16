@@ -8,5 +8,46 @@
     "uptime": "正常运行时间",
     "db_online": "✅ 在线",
     "db_offline": "❌ 离线"
+  },
+  "user_info_command": {
+    "title": "{{.Username}} 的信息",
+    "error_fetch": "❌ 获取成员信息失败。",
+    "section_basic": "基本信息",
+    "field_id": "ID:",
+    "field_bot": "机器人:",
+    "section_dates": "日期",
+    "field_account_created": "账户创建于:",
+    "field_server_joined": "加入服务器于:",
+    "section_status": "状态",
+    "section_activity": "活动",
+    "section_roles": "角色 ({{.Count}})",
+    "none": "无",
+    "status_online": "🟢 在线",
+    "status_idle": "🟡 离开",
+    "status_dnd": "🔴 请勿打扰",
+    "status_invisible": "⚪ 隐身",
+    "status_offline": "⚫ 离线",
+    "activity_playing": "正在玩",
+    "activity_streaming": "正在直播",
+    "activity_listening": "正在听",
+    "activity_watching": "正在看",
+    "activity_custom": "自定义状态",
+    "activity_competing": "正在参加",
+    "activity_unknown": "未知"
+  },
+  "avatar_command": {
+    "title": "{{.Username}} 的个人资料图片",
+    "error_fetch": "❌ 获取成员信息失败。",
+    "field_global_avatar": "全局头像 URL",
+    "field_server_avatar": "服务器头像 URL",
+    "field_banner": "横幅图片 URL",
+    "link": "链接"
+  },
+  "calculator_command": {
+    "title": "🧮 计算结果",
+    "field_expression": "表达式",
+    "field_result": "结果",
+    "error_invalid_expression": "❌ 无效的表达式：`{{.Expression}}`\n**错误：** `{{.Error}}`",
+    "error_evaluation": "❌ 评估表达式时出错：`{{.Expression}}`\n**错误：** `{{.Error}}`"
   }
 }

@@ -8,5 +8,46 @@
     "uptime": "가동 시간",
     "db_online": "✅ 온라인",
     "db_offline": "❌ 오프라인"
+  },
+  "user_info_command": {
+    "title": "{{.Username}} 정보",
+    "error_fetch": "❌ 멤버 정보를 가져오는 데 실패했습니다.",
+    "section_basic": "기본 정보",
+    "field_id": "ID:",
+    "field_bot": "봇:",
+    "section_dates": "날짜",
+    "field_account_created": "계정 생성일:",
+    "field_server_joined": "서버 참가일:",
+    "section_status": "상태",
+    "section_activity": "활동",
+    "section_roles": "역할 ({{.Count}})",
+    "none": "없음",
+    "status_online": "🟢 온라인",
+    "status_idle": "🟡 자리 비움",
+    "status_dnd": "🔴 다른 용무 중",
+    "status_invisible": "⚪ 오프라인으로 표시",
+    "status_offline": "⚫ 오프ライン",
+    "activity_playing": "플레이 중",
+    "activity_streaming": "방송 중",
+    "activity_listening": "듣는 중",
+    "activity_watching": "시청 중",
+    "activity_custom": "사용자 지정 상태",
+    "activity_competing": "경쟁 중",
+    "activity_unknown": "알 수 없음"
+  },
+  "avatar_command": {
+    "title": "{{.Username}}의 프로필 사진",
+    "error_fetch": "❌ 멤버 정보를 가져오는 데 실패했습니다.",
+    "field_global_avatar": "글로벌 아바타 URL",
+    "field_server_avatar": "서버 아바타 URL",
+    "field_banner": "배너 이미지 URL",
+    "link": "링크"
+  },
+  "calculator_command": {
+    "title": "🧮 계산 결과",
+    "field_expression": "수식",
+    "field_result": "결과",
+    "error_invalid_expression": "❌ 잘못된 수식입니다: `{{.Expression}}`\n**오류:** `{{.Error}}`",
+    "error_evaluation": "❌ 수식을 계산하는 동안 오류가 발생했습니다: `{{.Expression}}`\n**오류:** `{{.Error}}`"
   }
 }

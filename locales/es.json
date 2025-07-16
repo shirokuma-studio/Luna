@@ -8,5 +8,46 @@
     "uptime": "Tiempo de actividad",
     "db_online": "✅ En línea",
     "db_offline": "❌ Desconectado"
+  },
+  "user_info_command": {
+    "title": "Información de {{.Username}}",
+    "error_fetch": "❌ No se pudo obtener la información del miembro.",
+    "section_basic": "Información básica",
+    "field_id": "ID:",
+    "field_bot": "Bot:",
+    "section_dates": "Fechas",
+    "field_account_created": "Cuenta creada:",
+    "field_server_joined": "Se unió al servidor:",
+    "section_status": "Estado",
+    "section_activity": "Actividad",
+    "section_roles": "Roles ({{.Count}})",
+    "none": "Ninguno",
+    "status_online": "🟢 En línea",
+    "status_idle": "🟡 Ausente",
+    "status_dnd": "🔴 No molestar",
+    "status_invisible": "⚪ Invisible",
+    "status_offline": "⚫ Desconectado",
+    "activity_playing": "Jugando a",
+    "activity_streaming": "Transmitiendo",
+    "activity_listening": "Escuchando",
+    "activity_watching": "Viendo",
+    "activity_custom": "Estado personalizado",
+    "activity_competing": "Compite en",
+    "activity_unknown": "Desconocido"
+  },
+  "avatar_command": {
+    "title": "Foto de perfil de {{.Username}}",
+    "error_fetch": "❌ No se pudo obtener la información del miembro.",
+    "field_global_avatar": "URL del avatar global",
+    "field_server_avatar": "URL del avatar del servidor",
+    "field_banner": "URL de la imagen del banner",
+    "link": "Enlace"
+  },
+  "calculator_command": {
+    "title": "🧮 Resultado del cálculo",
+    "field_expression": "Expresión",
+    "field_result": "Resultado",
+    "error_invalid_expression": "❌ Expresión no válida: `{{.Expression}}`\n**Error:** `{{.Error}}`",
+    "error_evaluation": "❌ Ocurrió un error al evaluar la expresión: `{{.Expression}}`\n**Error:** `{{.Error}}`"
   }
 }

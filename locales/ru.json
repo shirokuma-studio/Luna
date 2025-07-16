@@ -8,5 +8,46 @@
     "uptime": "Время работы",
     "db_online": "✅ В сети",
     "db_offline": "❌ Не в сети"
+  },
+  "user_info_command": {
+    "title": "Информация о {{.Username}}",
+    "error_fetch": "❌ Не удалось получить информацию об участнике.",
+    "section_basic": "Основная информация",
+    "field_id": "ID:",
+    "field_bot": "Бот:",
+    "section_dates": "Даты",
+    "field_account_created": "Аккаунт создан:",
+    "field_server_joined": "Присоединился к серверу:",
+    "section_status": "Статус",
+    "section_activity": "Активность",
+    "section_roles": "Роли ({{.Count}})",
+    "none": "Нет",
+    "status_online": "🟢 В сети",
+    "status_idle": "🟡 Неактивен",
+    "status_dnd": "🔴 Не беспокоить",
+    "status_invisible": "⚪ Невидимый",
+    "status_offline": "⚫ Не в сети",
+    "activity_playing": "Играет в",
+    "activity_streaming": "Стримит",
+    "activity_listening": "Слушает",
+    "activity_watching": "Смотрит",
+    "activity_custom": "Пользовательский статус",
+    "activity_competing": "Соревнуется в",
+    "activity_unknown": "Неизвестно"
+  },
+  "avatar_command": {
+    "title": "Изображение профиля {{.Username}}",
+    "error_fetch": "❌ Не удалось получить информацию об участнике.",
+    "field_global_avatar": "URL глобального аватара",
+    "field_server_avatar": "URL аватара сервера",
+    "field_banner": "URL-адрес баннера",
+    "link": "Ссылка"
+  },
+  "calculator_command": {
+    "title": "🧮 Результат вычисления",
+    "field_expression": "Выражение",
+    "field_result": "Результат",
+    "error_invalid_expression": "❌ Неверное выражение: `{{.Expression}}`\n**Ошибка:** `{{.Error}}`",
+    "error_evaluation": "❌ Произошла ошибка при вычислении выражения: `{{.Expression}}`\n**Ошибка:** `{{.Error}}`"
   }
 }
